@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      #qrcode img {
+        margin-top: 20px;
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>QR Code Generator</h1>
+    <label for="urlInput">Nhập URL:</label>
+    <input
+      type="text"
+      id="urlInput"
+      placeholder="https://example.com"
+      size="50"
+    />
+    <button onclick="generateQRCode()">Tạo mã QR</button>
+
+    <div id="qrcode"></div>
+
+    <script>
+      function generateQRCode() {
+        const url = document.getElementById("urlInput").value;
+        const qrcodeDiv = document.getElementById("qrcode");
+
+        qrcodeDiv.innerHTML = "";
+
+        if (url.trim() === "") {
+          alert("Vui lòng nhập URL hợp lệ");
+          return;
+        }
+
+        QRCode.toDataURL(url, function (err, url) {
+          if (err) {
+            console.error(err);
+            alert("Đã xảy ra lỗi khi tạo mã QR");
+            return;
+          }
+
+          const img = document.createElement("img");
+          img.src = url;
+          qrcodeDiv.appendChild(img);
+        });
+      }
+    </script>
+  </body>
+</html>
